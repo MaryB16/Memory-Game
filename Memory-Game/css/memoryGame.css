@@ -1,2 +1,34 @@
-﻿body {
+﻿html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+header{
+}
+
+.deck {
+    height: 660px;
+    width: 660px;
+    background-color: aquamarine;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card{
+    height:165px;
+    width:165px;
+    background-color:lightskyblue;
+    border:solid black 1px;
 }
