@@ -31,4 +31,5 @@ header{
     width:165px;
     background-color:lightskyblue;
     border:solid black 1px;
+    cursor:pointer;
 }
