@@ -26,7 +26,7 @@ const flip = function flip(thisCard) {
 }
 
 const handleOnCardClick = function handleOnCardClick(event) {
-    console.log("Hello I clicked ye!")
+    console.log('Hello I clicked ye!')
     let card = event.target;
     if (flipping == false) {
         flip(card);
@@ -35,8 +35,10 @@ const handleOnCardClick = function handleOnCardClick(event) {
         }
         else {
             if (card.isEqualNode(openCard)) {
-                console.log("the two cards are the same, well done")
+                console.log('the two cards are the same, well done')
+                
                 openCard = null;
+
             }
             else {
                 flipping = true;
@@ -52,7 +54,8 @@ const handleOnCardClick = function handleOnCardClick(event) {
         }
     }
 }
-  deck.addEventListener('click', handleOnCardClick);
-
+cardElements.forEach(function (card) {
+    card.addEventListener('click', handleOnCardClick);
+});
 
 
