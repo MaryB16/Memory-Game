@@ -19,20 +19,9 @@ shuffleCards(cardElements)
 
 //This function is called when the card is clicked
 
-const flipp = function flipp(card) {
+const flip = function flip(card) {
      card.classList.add('clicked')
 }
-
-/*
-Alternative way of adding event listeners
-cardElements.forEach(function (card) {
-    card.addEventListener("click", onCardClicked)
-})
-
-function onCardClicked(event) {
-    //do all the card stuff
-}
-*/
 
 let openCard = null;
 let flipping = false
@@ -40,18 +29,18 @@ cardElements.forEach(function (card) {
 
     card.addEventListener('click', function () {
         console.log('I clicked! ' + flipping)
-        // we want to check if any card is fliiping, if it's fliiping don't do anything
+        // we want to check if any card is flipping, if it's flipping don't do anything
         if (flipping == false) {
-            flipp(card);
-
-
-
+            flip(card);
+  
             if (openCard == null) {
                 openCard = card;
             }
             else {
                 if (card.isEqualNode(openCard)) {
                     console.log("the two cards are the same, well done");
+                    openCard = null;
+
                 }
                 else {
                     flipping = true;
@@ -65,24 +54,7 @@ cardElements.forEach(function (card) {
                     // openCard.classList.remove('clicked');
                     setTimeout(() => card.classList.remove('clicked'), 500);
                 }
-
-
             }
         }
     });
 });
-
-
-
-
-/*
-//add cards to a list
-        cardList.push(card);
-        console.log(cardList);
-        if (cardList.length == 2) {
-            if (cardList[0].isEqualNode(cardList[1])) {
-                console.log('the two cards are the same, well done');
-            }
-            else console.log("haha try again");
-        }
-*/
