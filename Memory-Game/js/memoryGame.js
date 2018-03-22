@@ -1,4 +1,6 @@
 ﻿const cardElements = document.querySelectorAll('.card');
+////THINK IF U GONNA CHANGE IT TO ID
+const deck = document.querySelector('.deck');
 
 //When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
 
@@ -16,45 +18,41 @@ const shuffleCards= function shuffleCards(cardList) {
 }
 shuffleCards(cardElements)
 
-
+let openCard = null;
+let flipping = false;
 //This function is called when the card is clicked
-
-const flip = function flip(card) {
-     card.classList.add('clicked')
+const flip = function flip(thisCard) {
+    thisCard.classList.add('clicked');
 }
 
-let openCard = null;
-let flipping = false
-cardElements.forEach(function (card) {
-
-    card.addEventListener('click', function () {
-        console.log('I clicked! ' + flipping)
-        // we want to check if any card is flipping, if it's flipping don't do anything
-        if (flipping == false) {
-            flip(card);
-  
-            if (openCard == null) {
-                openCard = card;
+const handleOnCardClick = function handleOnCardClick(event) {
+    console.log("Hello I clicked ye!")
+    let card = event.target;
+    if (flipping == false) {
+        flip(card);
+        if (openCard == null) {
+            openCard = card;
+        }
+        else {
+            if (card.isEqualNode(openCard)) {
+                console.log("the two cards are the same, well done")
+                openCard = null;
             }
             else {
-                if (card.isEqualNode(openCard)) {
-                    console.log("the two cards are the same, well done");
+                flipping = true;
+                console.log("haha try again");
+
+                setTimeout(() => {
+                    openCard.classList.remove('clicked');
                     openCard = null;
-
-                }
-                else {
-                    flipping = true;
-                    console.log("haha try again");
-
-                    setTimeout(() => {
-                        openCard.classList.remove('clicked');
-                        openCard = null;
-                        flipping = false;
-                    }, 500);
-                    // openCard.classList.remove('clicked');
-                    setTimeout(() => card.classList.remove('clicked'), 500);
-                }
+                    flipping = false;
+                }, 500);
+                setTimeout(() => card.classList.remove('clicked'), 500);
             }
         }
-    });
-});
+    }
+}
+  deck.addEventListener('click', handleOnCardClick);
+
+
+
