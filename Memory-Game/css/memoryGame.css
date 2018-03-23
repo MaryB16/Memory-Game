@@ -15,14 +15,18 @@
     flex-direction: column;
 }
 
-.game-features{
-    height:30px;
-    width:660px;
-    border:solid green 2px;
+.game-features {
+    height: 30px;
+    width: 660px;
+    border: solid green 2px;
+    display: flex;
+    justify-content:space-around;
 }
 
-.restartButton{
-    float:right;
+.game-features .move-container{
+    font-size:20px;
+}
+.restart-button{
     padding-right:50px;
     cursor:pointer;
 }

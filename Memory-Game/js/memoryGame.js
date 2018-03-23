@@ -1,7 +1,7 @@
 ﻿const cardElements = document.querySelectorAll('.card');
 const deck = document.querySelector('.deck');
-const restartButton = document.querySelector('.restartButton');
-
+const restartButton = document.querySelector('.restart-button');
+let movesCounter = document.querySelector('#moves-counter');
 //When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
 const shuffleCards= function shuffleCards(cardList) {
     let cardPosition = cardList.length;
@@ -18,7 +18,8 @@ const shuffleCards= function shuffleCards(cardList) {
 
 let openCard = null;
 let flipping = false;
-let numberOfMatchedPairs=0;
+let numberOfMatchedPairs = 0;
+let moves = 0;
 //This function is called when the card is clicked
 const flip = function flip(thisCard) {
     thisCard.classList.add('clicked');
@@ -30,6 +31,9 @@ const handleOnCardClick = function handleOnCardClick(event) {
     //if the card is flipping dont do anything
     if (flipping == false) {
         flip(card);
+        moves++;
+        console.log(moves);
+        movesCounter.textContent = moves;
         if (openCard == null) {
             //Temporary remove event handler so the user cannnot click on the card twice.The event handle will be added back if the user doesn't match the card
             card.removeEventListener('click', handleOnCardClick);
@@ -69,6 +73,9 @@ const handleOnCardClick = function handleOnCardClick(event) {
 const gameStart = function gameStart() {
     shuffleCards(cardElements);
     numberOfMatchedPairs = 0;
+    //Reset the moves Counter;
+    moves = 0;
+    movesCounter.textContent = 0;
     cardElements.forEach(function (card) {
         card.addEventListener('click', handleOnCardClick);
         card.classList.remove('clicked');
