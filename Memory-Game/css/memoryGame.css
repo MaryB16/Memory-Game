@@ -15,7 +15,16 @@
     flex-direction: column;
 }
 
-header{
+.game-features{
+    height:30px;
+    width:660px;
+    border:solid green 2px;
+}
+
+.restartButton{
+    float:right;
+    padding-right:50px;
+    cursor:pointer;
 }
 
 .deck {
@@ -43,3 +52,6 @@ header{
     font-size: 3em;
 }
 
+.match{
+    background-color:peachpuff;
+}

@@ -1,5 +1,6 @@
 ﻿const cardElements = document.querySelectorAll('.card');
 const deck = document.querySelector('.deck');
+const restartButton = document.querySelector('.restartButton');
 
 //When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
 const shuffleCards= function shuffleCards(cardList) {
@@ -44,7 +45,6 @@ const handleOnCardClick = function handleOnCardClick(event) {
                 //Add a match class to paired cards for styling
                 card.classList.add('match');
                 openCard.classList.add('match'); 
-                checkIfUserWon(numberOfMatchedPairs);
                 //reset the openCard so we can match other cards as well
                 openCard = null;
             }
@@ -77,3 +77,9 @@ const gameStart = function gameStart() {
 }
 
 gameStart();
+
+//Game Features
+
+restartButton.addEventListener('click', function () {
+    gameStart();
+});
