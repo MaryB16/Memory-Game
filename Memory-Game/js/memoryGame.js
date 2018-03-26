@@ -1,5 +1,4 @@
 ﻿const cardElements = document.querySelectorAll('.card');
-const deck = document.querySelector('.deck');
 const restartButton = document.querySelector('.restart-button');
 let movesCounter = document.querySelector('#moves-counter');
 let timerCounter = document.querySelector('#timer-counter');
@@ -57,7 +56,6 @@ const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
     
     if (numberOfMatchedPairs == 2) {
         //setTimeout(() => { alert("YEY") }, 600);
-        
         showPopUp();
     }
 }
