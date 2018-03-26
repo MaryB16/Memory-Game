@@ -4,6 +4,8 @@ const restartButton = document.querySelector('.restart-button');
 let movesCounter = document.querySelector('#moves-counter');
 let timerCounter = document.querySelector('#timer-counter');
 let starElements = document.querySelectorAll('.star-element');
+const popUpContainer = document.querySelector('.popUp-container');
+const starElementsContainer = document.querySelector('.star-rating')
 
 //When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
 const shuffleCards= function shuffleCards(cardList) {
@@ -23,6 +25,7 @@ let openCard = null;
 let flipping = false;
 let numberOfMatchedPairs;
 let moves;
+let gameTimer;
 //First click lets the timer know when to start
 let firstClick = false;
 //The starNumber will help determining which star "disappears" after a certain number of  moves
@@ -42,12 +45,23 @@ const flip = function flip(thisCard) {
                 seconds = 0;
                 minutes++;
             }
+            //TO DO CHANGE TIMER BACK AFTER TESTING;
             timerCounter.textContent = `${minutes}:${seconds}`;
         };
-        const gameTimer = setInterval(timer, 1000);
+        gameTimer = setInterval(timer, 1000);
         firstClick = true;
     }
 }
+//Congratiolations you won pop-up
+const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
+    
+    if (numberOfMatchedPairs == 2) {
+        //setTimeout(() => { alert("YEY") }, 600);
+        
+        showPopUp();
+    }
+}
+
 const handleOnCardClick = function handleOnCardClick(event) {
     console.log('Hello I clicked ye!')
     console.log(`I clicked for the first time. ${firstClick}`)
@@ -78,9 +92,9 @@ const handleOnCardClick = function handleOnCardClick(event) {
             if (card.isEqualNode(openCard)) {
                 console.log('the two cards are the same, well done');
                 numberOfMatchedPairs++;
-                //For now the timer stops when there are 8 pairs of matched cards
-
                 
+                checkIfUserWon(numberOfMatchedPairs);
+               
                 //remove the event handler from the matched cards
                 card.removeEventListener('click', handleOnCardClick);
                 //openCard.removeEventListener('click', handleOnCardClick); [allready removed when openCard == null ]
@@ -114,8 +128,9 @@ const gameStart = function gameStart() {
     //Reset the moves Counter;
     moves = 0;
     movesCounter.textContent = 0;
+    
     let firstClick = false;
-
+   
     cardElements.forEach(function (card) {
         card.addEventListener('click', handleOnCardClick);
         card.classList.remove('clicked');
@@ -131,5 +146,23 @@ gameStart();
 
 //Game restart
 restartButton.addEventListener('click', function () {
+
     gameStart();
 });
+
+
+//Game PopUP
+const showPopUp = function showPopUp() {
+    popUpContainer.style.display = 'block';
+    const popUpMoves = document.querySelector('.popUp-moves');
+    const popUpTimer = document.querySelector('.popUp-timer');
+    const popUpRating = document.querySelector('.popUp-rating');
+    const popUpButton = document.querySelector('.button');
+    popUpMoves.textContent = `Moves: ${movesCounter.textContent}`;
+    popUpTimer.textContent = `Timer: ${timerCounter.textContent}`;
+    popUpRating.innerHTML = `Star rating: ${starElementsContainer.innerHTML}`;
+    popUpButton.addEventListener('click', function () {
+        gameStart();
+        popUpContainer.style.display = 'none';
+    })
+}
