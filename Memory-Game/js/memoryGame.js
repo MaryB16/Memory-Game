@@ -2,6 +2,9 @@
 const deck = document.querySelector('.deck');
 const restartButton = document.querySelector('.restart-button');
 let movesCounter = document.querySelector('#moves-counter');
+let timerCounter = document.querySelector('#timer-counter');
+let starElements = document.querySelectorAll('.star-element');
+
 //When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
 const shuffleCards= function shuffleCards(cardList) {
     let cardPosition = cardList.length;
@@ -18,21 +21,53 @@ const shuffleCards= function shuffleCards(cardList) {
 
 let openCard = null;
 let flipping = false;
-let numberOfMatchedPairs = 0;
-let moves = 0;
+let numberOfMatchedPairs;
+let moves;
+//First click lets the timer know when to start
+let firstClick = false;
+//The starNumber will help determining which star "disappears" after a certain number of  moves
+let numberOfStars = starElements.length;
+
 //This function is called when the card is clicked
 const flip = function flip(thisCard) {
     thisCard.classList.add('clicked');
+    //I added the game timer here so it starts when I flip the first card
+    //Game timer
+    let seconds = 0;
+    let minutes = 0;
+    if (firstClick == false) {
+        const timer = function timer() {
+            seconds++;
+            if (seconds == 60) {
+                seconds = 0;
+                minutes++;
+            }
+            timerCounter.textContent = `${minutes}:${seconds}`;
+        };
+        const gameTimer = setInterval(timer, 1000);
+        firstClick = true;
+    }
 }
-
 const handleOnCardClick = function handleOnCardClick(event) {
     console.log('Hello I clicked ye!')
+    console.log(`I clicked for the first time. ${firstClick}`)
     let card = event.target;
     //if the card is flipping dont do anything
     if (flipping == false) {
         flip(card);
+        //Counting the number of moves made by the user and showing them on screen
         moves++;
-        console.log(moves);
+        //TO DO: change the NUMBER OF MOVES NEEDED after the testing phase is done
+        if (moves == 2) {
+            starElements[numberOfStars - 1].style.visibility = "hidden";
+            //I am changing the last star selected
+        }
+
+        else if (moves == 4) {
+            //TO DO: change the way we acces the next star
+            starElements[numberOfStars - 2].style.visibility = "hidden";
+        }
+
         movesCounter.textContent = moves;
         if (openCard == null) {
             //Temporary remove event handler so the user cannnot click on the card twice.The event handle will be added back if the user doesn't match the card
@@ -43,6 +78,9 @@ const handleOnCardClick = function handleOnCardClick(event) {
             if (card.isEqualNode(openCard)) {
                 console.log('the two cards are the same, well done');
                 numberOfMatchedPairs++;
+                //For now the timer stops when there are 8 pairs of matched cards
+
+                
                 //remove the event handler from the matched cards
                 card.removeEventListener('click', handleOnCardClick);
                 //openCard.removeEventListener('click', handleOnCardClick); [allready removed when openCard == null ]
@@ -76,17 +114,22 @@ const gameStart = function gameStart() {
     //Reset the moves Counter;
     moves = 0;
     movesCounter.textContent = 0;
+    let firstClick = false;
+
     cardElements.forEach(function (card) {
         card.addEventListener('click', handleOnCardClick);
         card.classList.remove('clicked');
         card.classList.remove('match');
     });
+
+    for (i = 0; i < numberOfStars; i++) {
+        starElements[i].style.visibility = "visible";
+    }
 }
 
 gameStart();
 
-//Game Features
-
+//Game restart
 restartButton.addEventListener('click', function () {
     gameStart();
 });

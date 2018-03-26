@@ -23,6 +23,12 @@
     justify-content:space-around;
 }
 
+.star-rating{
+ font-size:1.2em;
+ color:darkgoldenrod;
+ border:solid red 2px;
+}
+
 .game-features .move-container{
     font-size:20px;
 }
