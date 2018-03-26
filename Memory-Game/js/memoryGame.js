@@ -44,8 +44,7 @@ const flip = function flip(thisCard) {
                 seconds = 0;
                 minutes++;
             }
-            //TO DO CHANGE TIMER BACK AFTER TESTING;
-            timerCounter.textContent = `${minutes}:${seconds}`;
+            timerCounter.textContent = `${minutes}:${(seconds+'').padStart(2,'00')}`;
         };
         gameTimer = setInterval(timer, 1000);
         firstClick = true;
@@ -53,10 +52,9 @@ const flip = function flip(thisCard) {
 }
 //Congratiolations you won pop-up
 const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
-    
     if (numberOfMatchedPairs == 2) {
-        //setTimeout(() => { alert("YEY") }, 600);
-        showPopUp();
+        clearInterval(gameTimer);
+        showPopUp();      
     }
 }
 
@@ -126,9 +124,9 @@ const gameStart = function gameStart() {
     //Reset the moves Counter;
     moves = 0;
     movesCounter.textContent = 0;
-    
-    let firstClick = false;
-   
+    firstClick = false;
+    clearInterval(gameTimer);
+    timerCounter.textContent = '0:00';
     cardElements.forEach(function (card) {
         card.addEventListener('click', handleOnCardClick);
         card.classList.remove('clicked');
