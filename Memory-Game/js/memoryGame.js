@@ -1,10 +1,18 @@
 ﻿const cardElements = document.querySelectorAll('.card');
 const restartButton = document.querySelector('.restart-button');
-let movesCounter = document.querySelector('#moves-counter');
-let timerCounter = document.querySelector('#timer-counter');
-let starElements = document.querySelectorAll('.star-element');
+const movesCounter = document.querySelector('#moves-counter');
+const timerCounter = document.querySelector('#timer-counter');
+const starElements = document.querySelectorAll('.star-element');
 const popUpContainer = document.querySelector('.popUp-container');
-const starElementsContainer = document.querySelector('.star-rating')
+const starElementsContainer = document.querySelector('.star-rating');
+
+let openCard;
+let flipping;
+let numberOfMatchedPairs;
+let moves;
+let gameTimer;
+//First click lets the timer know when to start
+let firstClick;
 
 //When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
 const shuffleCards= function shuffleCards(cardList) {
@@ -20,65 +28,77 @@ const shuffleCards= function shuffleCards(cardList) {
     return cardList;
 }
 
-let openCard = null;
-let flipping = false;
-let numberOfMatchedPairs;
-let moves;
-let gameTimer;
-//First click lets the timer know when to start
-let firstClick = false;
-//The starNumber will help determining which star "disappears" after a certain number of  moves
-let numberOfStars = starElements.length;
-
-//This function is called when the card is clicked
-const flip = function flip(thisCard) {
-    thisCard.classList.add('clicked');
-    //I added the game timer here so it starts when I flip the first card
-    //Game timer
-    let seconds = 0;
-    let minutes = 0;
+/**
+ * Flips a card, revealing it's contents. If it's the first card clicked, it also starts the timer.
+ * @param {HTMLElement} cardElement
+ */
+const flip = function flip(cardElement) {
+    cardElement.classList.add('clicked');
+    // Count the number of moves made by the user
+    moves++;
     if (firstClick == false) {
-        const timer = function timer() {
-            seconds++;
-            if (seconds == 60) {
-                seconds = 0;
-                minutes++;
-            }
-            timerCounter.textContent = `${minutes}:${(seconds+'').padStart(2,'00')}`;
-        };
-        gameTimer = setInterval(timer, 1000);
+        startTimer();
         firstClick = true;
     }
 }
-//Congratiolations you won pop-up
+
+/**
+ * Starts the game timer.
+ */
+const startTimer = function startTimer() {
+    let seconds = 0;
+    let minutes = 0;
+    const timer = function timer() {
+        seconds++;
+        if (seconds == 60) {
+            seconds = 0;
+            minutes++;
+        }
+        // Adds padding zeroes to the seconds (ie. 0:05, 0:06, etc)
+        timerCounter.textContent = `${minutes}:${(seconds + '').padStart(2, '00')}`;
+    };
+    gameTimer = setInterval(timer, 1000);
+}
+
+/**
+ * Checks if the user has matched all cards. If true stop the timer and show the win popup.
+ * @param {Number} numberOfPairs
+ */
 const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
+    // TODO: change constant 2 to actual number of cards that need to be matched
     if (numberOfMatchedPairs == 2) {
         clearInterval(gameTimer);
         showPopUp();      
     }
 }
 
+/**
+ * Removes a star from the user based on the number of performed moves.
+ */
+const updateStarStatus = function updateStarStatus() {
+    // TODO: change the points at which stars are deducted (ie. after 10 moves or 20 moves)
+    if (moves == 2) {
+        // Remove one star
+        starElements[2].style.visibility = "hidden";
+    }
+    else if (moves == 4) {
+        // Remmove the other
+        starElements[1].style.visibility = "hidden";
+    }
+}
+
+/**
+ * Handles clicks on card elements.
+ * @param {any} event
+ */
 const handleOnCardClick = function handleOnCardClick(event) {
-    console.log('Hello I clicked ye!')
-    console.log(`I clicked for the first time. ${firstClick}`)
-    let card = event.target;
-    //if the card is flipping dont do anything
+    const card = event.target;
+    // If the card is flipping don't do anything
     if (flipping == false) {
         flip(card);
-        //Counting the number of moves made by the user and showing them on screen
-        moves++;
-        //TO DO: change the NUMBER OF MOVES NEEDED after the testing phase is done
-        if (moves == 2) {
-            starElements[numberOfStars - 1].style.visibility = "hidden";
-            //I am changing the last star selected
-        }
-
-        else if (moves == 4) {
-            //TO DO: change the way we acces the next star
-            starElements[numberOfStars - 2].style.visibility = "hidden";
-        }
-
+        updateStarStatus();
         movesCounter.textContent = moves;
+
         if (openCard == null) {
             //Temporary remove event handler so the user cannnot click on the card twice.The event handle will be added back if the user doesn't match the card
             card.removeEventListener('click', handleOnCardClick);
@@ -86,28 +106,25 @@ const handleOnCardClick = function handleOnCardClick(event) {
         }
         else {
             if (card.isEqualNode(openCard)) {
-                console.log('the two cards are the same, well done');
                 numberOfMatchedPairs++;
                 
                 checkIfUserWon(numberOfMatchedPairs);
                
-                //remove the event handler from the matched cards
+                // Remove the event handler from the matched cards
                 card.removeEventListener('click', handleOnCardClick);
-                //openCard.removeEventListener('click', handleOnCardClick); [allready removed when openCard == null ]
-                //Add a match class to paired cards for styling
+                // openCard.removeEventListener('click', handleOnCardClick); [allready removed when openCard == null ]
                 card.classList.add('match');
                 openCard.classList.add('match'); 
-                //reset the openCard so we can match other cards as well
+                // Reset the openCard so we can match other cards as well
                 openCard = null;
             }
             else {
                 flipping = true;
-                console.log("haha try again");
 
                 setTimeout(() => {
                     openCard.classList.remove('clicked');
                     card.classList.remove('clicked');
-                    //Added the eventhandler on the card so it can be used again
+                    // Add the eventhandler on the card so it can be used again
                     openCard.addEventListener('click', handleOnCardClick);
                     openCard = null;
                     flipping = false;
@@ -117,25 +134,30 @@ const handleOnCardClick = function handleOnCardClick(event) {
     }
 }
 
-//created a game Start Function that when invoked starts the game
+/**
+ * Shuffles the cards and sets the initial game state.
+ */
 const gameStart = function gameStart() {
     shuffleCards(cardElements);
     numberOfMatchedPairs = 0;
     //Reset the moves Counter;
+    openCard = null;
     moves = 0;
     movesCounter.textContent = 0;
     firstClick = false;
+    flipping = false;
     clearInterval(gameTimer);
     timerCounter.textContent = '0:00';
+
     cardElements.forEach(function (card) {
         card.addEventListener('click', handleOnCardClick);
         card.classList.remove('clicked');
         card.classList.remove('match');
     });
 
-    for (i = 0; i < numberOfStars; i++) {
-        starElements[i].style.visibility = "visible";
-    }
+    starElements.forEach(function (star) {
+        star.style.visibility = 'visible';
+    });
 }
 
 gameStart();
