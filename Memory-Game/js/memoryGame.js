@@ -168,7 +168,6 @@ restartButton.addEventListener('click', function () {
     gameStart();
 });
 
-
 //Game PopUP
 const showPopUp = function showPopUp() {
     popUpContainer.style.display = 'block';
@@ -176,11 +175,11 @@ const showPopUp = function showPopUp() {
     const popUpTimer = document.querySelector('.popUp-timer');
     const popUpRating = document.querySelector('.popUp-rating');
     const popUpButton = document.querySelector('.button');
-    popUpMoves.textContent = `Moves: ${movesCounter.textContent}`;
-    popUpTimer.textContent = `Timer: ${timerCounter.textContent}`;
-    popUpRating.innerHTML = `Star rating: ${starElementsContainer.innerHTML}`;
+    popUpMoves.textContent = `${movesCounter.textContent}`;
+    popUpTimer.textContent = `${timerCounter.textContent}`;
+    popUpRating.innerHTML = `${starElementsContainer.innerHTML}`;
     popUpButton.addEventListener('click', function () {
         gameStart();
         popUpContainer.style.display = 'none';
     })
-}
+};
