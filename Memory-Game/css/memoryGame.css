@@ -2,9 +2,9 @@
     box-sizing: border-box;
 }
 
-html,body{
-    margin:0;
-    padding:0;
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -20,7 +20,6 @@ body {
 
 .container {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
@@ -33,25 +32,21 @@ body {
     width: 660px;
     display: flex;
     justify-content:space-around;
+    font-size:1.3em;
 }
 
 .star-rating {
- font-size:1.2em;
  color:darkgoldenrod;
+ width:90px;
 }
 
-.move-container,
-.timer {
-    font-size:20px;
-}
 .restart-button{
-    padding-right:50px;
     cursor:pointer;
 }
 
 .deck {
     width: 660px;
-    min-height: 680px;
+    height: 680px;
     background: #bbdefb;
     padding: 30px;
     display: flex;
@@ -65,22 +60,25 @@ body {
     height: 125px;
     width: 125px;
     background: #80DEEA;
-    font-size: 2em;
+    font-size: 1em;
     color: #ffffff;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    /*Added transition here so the card also flips back if it not matched*/
+    transition: all 0.5s ease-in-out;
 }
 
 .clicked {
-    background-color: #F7ABBD;
+    background-color: #e57373;
     font-size: 3em;
+    transform: rotateY(180deg);
 }
 
-.match{
-    background-color:peachpuff;
+.match {
+    background-color: #81c784;
 }
 
 /*Pop-up that appears after the user has finished the game*/
@@ -95,18 +93,19 @@ body {
     width: 100%;
     background-color: rgba(0,0,0,0.5);
 }
+
 .popUp-content {
     background-color: lightgray;
     margin: 10% auto;
     padding:0;
-    width: 40%;
-    height:45%;
+    width: 500px;
+    height:420px;
     box-shadow: 0 5px 8px rgba(0,0,0,0.2),0 7px 20px rgba(0,0,0,0.17);
-    animation-name: PopUp-open;
+    animation-name: popUp-open;
     animation-duration: 1s;
 }
 
-@keyframes PopUp-open {
+@keyframes popUp-open {
     from {
         opacity: 0
     }
@@ -156,4 +155,63 @@ body {
     cursor:pointer;
     display:inline-block;
     margin-top:20px;
+}
+
+/*Media query*/
+
+@media screen and (max-width:469px)  {
+.deck{
+    width:300px;
+    height:320px;
+    padding:10px;
+}
+
+.game-features{
+    width:300px;
+    font-size:0.9em;
+}
+
+
+.card{
+    width:70px;
+    height:70px;
+    }
+
+.popUp-content {
+    width:320px;
+    height:380px;
+    }
+
+.popUp-content > header > h2,
+.popUp-scores {
+    font-size:1.2em;
+    }
+}
+
+@media screen and (min-width:470px) and (max-width:700px) {
+.deck{
+    width:420px;
+    height:420px;
+    padding:15px;
+}
+
+.game-features{
+    width:420px;
+    font-size:1em;
+}
+
+.card{
+    width:90px;
+    height:90px;
+    }
+
+.popUp-content {
+    width:320px;
+    height:380px;
+    }
+
+.popUp-content > header > h2,
+.popUp-scores {
+    font-size:1.3em;
+    }
 }

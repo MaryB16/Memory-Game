@@ -68,7 +68,9 @@ const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
     // TODO: change constant 2 to actual number of cards that need to be matched
     if (numberOfMatchedPairs == 2) {
         clearInterval(gameTimer);
-        showPopUp();      
+        setTimeout(() => {
+            showPopUp();
+        }, 1000);
     }
 }
 
@@ -79,11 +81,11 @@ const updateStarStatus = function updateStarStatus() {
     // TODO: change the points at which stars are deducted (ie. after 10 moves or 20 moves)
     if (moves == 2) {
         // Remove one star
-        starElements[2].style.visibility = "hidden";
+        starElements[2].style.display = 'none';
     }
     else if (moves == 4) {
         // Remmove the other
-        starElements[1].style.visibility = "hidden";
+        starElements[1].style.display = 'none';
     }
 }
 
@@ -120,7 +122,6 @@ const handleOnCardClick = function handleOnCardClick(event) {
             }
             else {
                 flipping = true;
-
                 setTimeout(() => {
                     openCard.classList.remove('clicked');
                     card.classList.remove('clicked');
@@ -128,7 +129,7 @@ const handleOnCardClick = function handleOnCardClick(event) {
                     openCard.addEventListener('click', handleOnCardClick);
                     openCard = null;
                     flipping = false;
-                }, 500);
+                }, 1000);
             }
         }
     }
@@ -156,7 +157,7 @@ const gameStart = function gameStart() {
     });
 
     starElements.forEach(function (star) {
-        star.style.visibility = 'visible';
+        star.style.display = 'inline-block';
     });
 }
 
@@ -167,6 +168,7 @@ restartButton.addEventListener('click', function () {
 
     gameStart();
 });
+
 
 //Game PopUP
 const showPopUp = function showPopUp() {
