@@ -24,7 +24,6 @@ const shuffleCards= function shuffleCards(cardList) {
         cardList[cardPosition].innerHTML = cardList[randomCardPosition].innerHTML;
         cardList[randomCardPosition].innerHTML = temporaryCard;
     }
-
     return cardList;
 }
 
@@ -65,8 +64,7 @@ const startTimer = function startTimer() {
  * @param {Number} numberOfPairs
  */
 const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
-    // TODO: change constant 2 to actual number of cards that need to be matched
-    if (numberOfMatchedPairs == 2) {
+    if (numberOfMatchedPairs == 8) {
         clearInterval(gameTimer);
         setTimeout(() => {
             showPopUp();
@@ -78,12 +76,11 @@ const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
  * Removes a star from the user based on the number of performed moves.
  */
 const updateStarStatus = function updateStarStatus() {
-    // TODO: change the points at which stars are deducted (ie. after 10 moves or 20 moves)
-    if (moves == 2) {
+    if (moves == 22) {
         // Remove one star
         starElements[2].style.display = 'none';
     }
-    else if (moves == 4) {
+    else if (moves == 30) {
         // Remmove the other
         starElements[1].style.display = 'none';
     }
@@ -165,12 +162,13 @@ gameStart();
 
 //Game restart
 restartButton.addEventListener('click', function () {
-
     gameStart();
 });
 
 
-//Game PopUP
+/**
+ * Modal/PopUp function
+ */
 const showPopUp = function showPopUp() {
     popUpContainer.style.display = 'block';
     const popUpMoves = document.querySelector('.popUp-moves');

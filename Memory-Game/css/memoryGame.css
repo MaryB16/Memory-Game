@@ -9,7 +9,7 @@ html, body {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #E1F5FE;
+    background-color: #e1f5fe;
 }
 
 *,
@@ -27,6 +27,7 @@ body {
 .container h1 {
     color: #232b2b;
 }
+
 .game-features {
     height: 30px;
     width: 660px;
@@ -36,11 +37,11 @@ body {
 }
 
 .star-rating {
- color:darkgoldenrod;
- width:90px;
+    color: #f9a825;
+    width: 90px;
 }
 
-.restart-button{
+.restart-button {
     cursor:pointer;
 }
 
@@ -60,7 +61,7 @@ body {
     height: 125px;
     width: 125px;
     background: #80DEEA;
-    font-size: 1em;
+    font-size: 0;
     color: #ffffff;
     cursor: pointer;
     display: flex;
@@ -124,7 +125,7 @@ body {
     justify-content: center;
 }
 
-.popUp-content > header > h2{
+.popUp-content > header > h2 {
     font-size:2em;
     color:white;
 }
@@ -134,15 +135,15 @@ body {
     text-align:center;
 }
 
-.popUp-scores > h3{
+.popUp-scores > h3 {
     margin-bottom:0;
 }
 
-.popUp-scores span{
+.popUp-scores span {
     color:#009faf;
 }
 
-.popUp-content footer{
+.popUp-content footer {
     text-align:center;
     margin-top:20px;
 }
@@ -159,59 +160,60 @@ body {
 
 /*Media query*/
 
-@media screen and (max-width:469px)  {
-.deck{
-    width:300px;
-    height:320px;
-    padding:10px;
-}
+@media screen and (max-width:469px) {
 
-.game-features{
-    width:300px;
-    font-size:0.9em;
-}
-
-
-.card{
-    width:70px;
-    height:70px;
+    .deck {
+        width:300px;
+        height:320px;
+        padding:10px;
     }
 
-.popUp-content {
-    width:320px;
-    height:380px;
+    .game-features {
+        width: 300px;
+        font-size: 0.9em;
+    }
+    
+    .card {
+        width:70px;
+        height:70px;
     }
 
-.popUp-content > header > h2,
-.popUp-scores {
-    font-size:1.2em;
+    .popUp-content {
+        width:320px;
+        height:380px;
+    }
+
+    .popUp-content > header > h2,
+    .popUp-scores {
+        font-size:1.2em;
     }
 }
 
 @media screen and (min-width:470px) and (max-width:700px) {
-.deck{
-    width:420px;
-    height:420px;
-    padding:15px;
-}
 
-.game-features{
-    width:420px;
-    font-size:1em;
-}
-
-.card{
-    width:90px;
-    height:90px;
+    .deck {
+        width: 420px;
+        height: 420px;
+        padding: 15px;
+    }
+    
+    .game-features {
+        width:420px;
+        font-size:1em;
     }
 
-.popUp-content {
-    width:320px;
-    height:380px;
+    .card {
+        width:90px;
+        height:90px;
+    }
+    
+    .popUp-content {
+        width:320px;
+        height:380px;
     }
 
-.popUp-content > header > h2,
-.popUp-scores {
-    font-size:1.3em;
+    .popUp-content > header > h2,
+    .popUp-scores {
+        font-size:1.3em;
     }
 }
