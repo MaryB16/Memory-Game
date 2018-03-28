@@ -3,7 +3,6 @@ const restartButton = document.querySelector('.restart-button');
 const movesCounter = document.querySelector('#moves-counter');
 const timerCounter = document.querySelector('#timer-counter');
 const starElements = document.querySelectorAll('.star-element');
-const popUpContainer = document.querySelector('.popUp-container');
 const starElementsContainer = document.querySelector('.star-rating');
 
 let openCard;
@@ -11,10 +10,12 @@ let flipping;
 let numberOfMatchedPairs;
 let moves;
 let gameTimer;
-//First click lets the timer know when to start
 let firstClick;
 
-//When the game starts, this function makes sure the cards are 'shuffled'( the cards have a random pattern on the grid)
+/**
+ * Shuffles a list of card elements by swapping their contents.
+ * @param {Array} cardList
+ */
 const shuffleCards= function shuffleCards(cardList) {
     let cardPosition = cardList.length;
     while (0 !== cardPosition) {
@@ -99,14 +100,14 @@ const handleOnCardClick = function handleOnCardClick(event) {
         movesCounter.textContent = moves;
 
         if (openCard == null) {
-            //Temporary remove event handler so the user cannnot click on the card twice.The event handle will be added back if the user doesn't match the card
+            // Temporarily remove the event handler so the user cannnot click on the card twice
+            // The event handler will be added back if the user doesn't match the card
             card.removeEventListener('click', handleOnCardClick);
             openCard = card;
         }
         else {
             if (card.isEqualNode(openCard)) {
                 numberOfMatchedPairs++;
-                
                 checkIfUserWon(numberOfMatchedPairs);
                
                 // Remove the event handler from the matched cards
@@ -138,7 +139,6 @@ const handleOnCardClick = function handleOnCardClick(event) {
 const gameStart = function gameStart() {
     shuffleCards(cardElements);
     numberOfMatchedPairs = 0;
-    //Reset the moves Counter;
     openCard = null;
     moves = 0;
     movesCounter.textContent = 0;
@@ -158,28 +158,29 @@ const gameStart = function gameStart() {
     });
 }
 
-gameStart();
-
-//Game restart
-restartButton.addEventListener('click', function () {
-    gameStart();
-});
-
-
 /**
- * Modal/PopUp function
+ * Displays a modal popup with game data (moves, time, stars etc).
  */
 const showPopUp = function showPopUp() {
-    popUpContainer.style.display = 'block';
+    const popUpContainer = document.querySelector('.popUp-container');
     const popUpMoves = document.querySelector('.popUp-moves');
     const popUpTimer = document.querySelector('.popUp-timer');
     const popUpRating = document.querySelector('.popUp-rating');
     const popUpButton = document.querySelector('.button');
+
+    popUpContainer.style.display = 'block';
+    popUpRating.innerHTML = `${starElementsContainer.innerHTML}`;
     popUpMoves.textContent = `${movesCounter.textContent}`;
     popUpTimer.textContent = `${timerCounter.textContent}`;
-    popUpRating.innerHTML = `${starElementsContainer.innerHTML}`;
+
     popUpButton.addEventListener('click', function () {
         gameStart();
         popUpContainer.style.display = 'none';
-    })
+    });
 };
+
+restartButton.addEventListener('click', function () {
+    gameStart();
+});
+
+gameStart();
