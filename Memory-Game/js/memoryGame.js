@@ -16,7 +16,7 @@ let firstClick;
  * Shuffles a list of card elements by swapping their contents.
  * @param {Array} cardList
  */
-const shuffleCards= function shuffleCards(cardList) {
+const shuffleCards = function shuffleCards(cardList) {
     let cardPosition = cardList.length;
     while (0 !== cardPosition) {
         let randomCardPosition = Math.floor(Math.random() * cardPosition);
@@ -26,7 +26,7 @@ const shuffleCards= function shuffleCards(cardList) {
         cardList[randomCardPosition].innerHTML = temporaryCard;
     }
     return cardList;
-}
+};
 
 /**
  * Flips a card, revealing it's contents. If it's the first card clicked, it also starts the timer.
@@ -36,11 +36,11 @@ const flip = function flip(cardElement) {
     cardElement.classList.add('clicked');
     // Count the number of moves made by the user
     moves++;
-    if (firstClick == false) {
+    if (firstClick === false) {
         startTimer();
         firstClick = true;
     }
-}
+};
 
 /**
  * Starts the game timer.
@@ -58,7 +58,7 @@ const startTimer = function startTimer() {
         timerCounter.textContent = `${minutes}:${(seconds + '').padStart(2, '00')}`;
     };
     gameTimer = setInterval(timer, 1000);
-}
+};
 
 /**
  * Checks if the user has matched all cards. If true stop the timer and show the win popup.
@@ -71,7 +71,7 @@ const checkIfUserWon = function checkIfUserWon(numberOfPairs) {
             showPopUp();
         }, 1000);
     }
-}
+};
 
 /**
  * Removes a star from the user based on the number of performed moves.
@@ -85,7 +85,7 @@ const updateStarStatus = function updateStarStatus() {
         // Remmove the other
         starElements[1].style.display = 'none';
     }
-}
+};
 
 /**
  * Handles clicks on card elements.
@@ -94,7 +94,7 @@ const updateStarStatus = function updateStarStatus() {
 const handleOnCardClick = function handleOnCardClick(event) {
     const card = event.target;
     // If the card is flipping don't do anything
-    if (flipping == false) {
+    if (flipping === false) {
         flip(card);
         updateStarStatus();
         movesCounter.textContent = moves;
@@ -109,12 +109,12 @@ const handleOnCardClick = function handleOnCardClick(event) {
             if (card.isEqualNode(openCard)) {
                 numberOfMatchedPairs++;
                 checkIfUserWon(numberOfMatchedPairs);
-               
+
                 // Remove the event handler from the matched cards
                 card.removeEventListener('click', handleOnCardClick);
                 // openCard.removeEventListener('click', handleOnCardClick); [allready removed when openCard == null ]
                 card.classList.add('match');
-                openCard.classList.add('match'); 
+                openCard.classList.add('match');
                 // Reset the openCard so we can match other cards as well
                 openCard = null;
             }
@@ -131,7 +131,7 @@ const handleOnCardClick = function handleOnCardClick(event) {
             }
         }
     }
-}
+};
 
 /**
  * Shuffles the cards and sets the initial game state.
@@ -156,7 +156,7 @@ const gameStart = function gameStart() {
     starElements.forEach(function (star) {
         star.style.display = 'inline-block';
     });
-}
+};
 
 /**
  * Displays a modal popup with game data (moves, time, stars etc).
