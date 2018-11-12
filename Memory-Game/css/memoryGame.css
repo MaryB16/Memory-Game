@@ -39,6 +39,7 @@ body {
 .star-rating {
     color: #f9a825;
     width: 90px;
+    display:flex;
 }
 
 .restart-button {
