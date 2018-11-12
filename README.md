@@ -18,4 +18,5 @@ Every time the player clicks a card, one move is added to his move counter. Clic
 Once the player matches all the cards, a popUp will appear that tells him how many stars he has won, how many moves it took him, how much time the game took and will also offer the possibility to start  a new game.
 
 ## Known issues
-The game does not work well in landscape mode on phones or tablets. It is recommended that the player keeps his device in portrait mode (holds his device vertically)
+The game does not work well in landscape mode on phones or tablets. It is recommended that the player keeps his device in portrait mode
+It does not work on internet explorer
