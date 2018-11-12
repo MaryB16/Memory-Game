@@ -96,11 +96,11 @@ body {
 }
 
 .popUp-content {
-    background-color: lightgray;
+    background-color: #e1e8f0;
     margin: 10% auto;
     padding: 0;
     width: 500px;
-    height: 420px;
+    height: 480px;
     box-shadow: 0 5px 8px rgba(0,0,0,0.2),0 7px 20px rgba(0,0,0,0.17);
     animation-name: popUp-open;
     animation-duration: 1s;
@@ -110,14 +110,14 @@ body {
     height: 20%;
     width: 100%;
     text-align: center;
-    background-color: #4dd0e1;
+    background-color:#6ed3cf;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .popUp-content > header > h2 {
-    font-size:2em;
+    font-size:1.5em;
     color:white;
 }
 
@@ -142,11 +142,10 @@ body {
 .popUp-content .button {
     color: #fff;
     font-size: 1.3em;
-    background: #009faf;
+    background: #9068be;
     padding: 10px 20px;
     cursor: pointer;
     display: inline-block;
-    margin-top: 20px;
 }
 
 @keyframes popUp-open {
